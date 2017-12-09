@@ -71,7 +71,9 @@ fi
 make dist
 
 # Check that the distribution version works by building it again
-tar xf fwup-$FWUP_VERSION.tar.gz
+mkdir distcheck
+cd distcheck
+tar xf ../fwup-$FWUP_VERSION.tar.gz
 cd fwup-$FWUP_VERSION
 if [ "$CIRCLE_OS_NAME" = "linux" ]; then
     ./configure;
@@ -84,3 +86,4 @@ if ! make -j4 check; then
     echo "Distribution 'make check' failed. See log above"
     exit 1
 fi
+cd ../..
