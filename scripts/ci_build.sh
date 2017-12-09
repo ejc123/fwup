@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #
-# Build script for Travis
+# Build script for CircleCi
 #
 # Inputs:
-#    TRAVIS_OS_NAME - "linux" or "osx"
+#    CIRCLE_OS_NAME - "linux" or "osx"
 #    MODE           - "static", "dynamic", "windows", "raspberrypi", or "minimal"
 #
 # Static builds use scripts to download libarchive and libconfuse, so those are
@@ -19,7 +19,7 @@ FWUP_VERSION=$(cat VERSION)
 # Create ./configure
 ./autogen.sh
 
-case "${TRAVIS_OS_NAME}-${MODE}" in
+case "${CIRCLE_OS_NAME}-${MODE}" in
     *-static)
         # If this is a static build, run 'build_pkg.sh'
         bash -v scripts/build_pkg.sh
@@ -57,7 +57,7 @@ case "${TRAVIS_OS_NAME}-${MODE}" in
         exit 0
         ;;
     *)
-        echo "Unexpected build option: ${TRAVIS_OS_NAME}-${MODE}"
+        echo "Unexpected build option: ${CIRCLE_OS_NAME}-${MODE}"
         exit 1
 esac
 
@@ -73,7 +73,7 @@ make dist
 # Check that the distribution version works by building it again
 tar xf fwup-$FWUP_VERSION.tar.gz
 cd fwup-$FWUP_VERSION
-if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+if [ "$CIRCLE_OS_NAME" = "linux" ]; then
     ./configure;
 else
     PKG_CONFIG_PATH="/usr/local/opt/libarchive/lib/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH" ./configure;

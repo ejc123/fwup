@@ -1,0 +1,87 @@
+build_workflow: &build_workflow
+  context: org-global
+  filters:
+    tags:
+      only: /.*/
+
+deploy_workflow: &deploy_workflow
+  context: org-global
+  filters:
+    branches:
+      ignore: /.*/
+    tags:
+      only: /v.*/
+
+defaults: &defaults
+  docker:
+    - image: nervesproject/nerves_system_br
+
+build: &build
+  steps:
+    - checkout
+    - restore_cache:
+        key: dl-{{ .Branch }}
+    - run:
+        name: Install Deps
+        command: scripts/ci_install_deps.sh
+    - run:
+        name: Build
+        command: scripts/ci_build.sh
+    - store_artifacts:
+        path: tests
+        destination: tests
+    - store_artifacts:
+        path: artifacts
+        destination: artifacts
+    - save_cache:
+        key: dl-{{ .Branch }}
+        paths:
+          - dl
+
+jobs:
+  linux_gcc_static:
+    <<: *defaults
+    environment:
+      CIRCLE_OS_NAME: linux
+      MODE: static
+    <<: *build
+  linux_gcc_dynamic:
+    <<: *defaults
+    environment:
+      CIRCLE_OS_NAME: linux
+      MODE: dynamic
+    <<: *build
+  linux_gcc_windows:
+    <<: *defaults
+    environment:
+      CIRCLE_OS_NAME: linux
+      MODE: windows
+    <<: *build
+  linux_gcc_raspberrypi:
+    <<: *defaults
+    environment:
+      CIRCLE_OS_NAME: linux
+      MODE: raspberrypi
+    <<: *build
+  linux_gcc_singlethread:
+    <<: *defaults
+    environment:
+      CIRCLE_OS_NAME: linux
+      MODE: singlethread
+    <<: *build
+
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - linux_gcc_static:
+          <<: *build_workflow
+      - linux_gcc_dynamic:
+          <<: *build_workflow
+      - linux_gcc_windows:
+          <<: *build_workflow
+      - linux_gcc_raspberrypi:
+          <<: *build_workflow
+      - linux_gcc_singlethread:
+          <<: *build_workflow
+
