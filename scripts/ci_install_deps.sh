@@ -47,6 +47,7 @@ if [[ "$CIRCLE_OS_NAME" = "linux" ]]; then
         singlethread|dynamic|minimal)
             apt-get install -qq libarchive-dev python-pip python-dev
             install_confuse
+            pip install --upgrade pip
             pip install --user cpp-coveralls
             ;;
         static)
