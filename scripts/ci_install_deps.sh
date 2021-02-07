@@ -66,12 +66,12 @@ if [[ "$CIRCLE_OS_NAME" = "linux" ]]; then
     esac
 else
     # OSX
-    # Travis comes with pkg-config, automake, and coreutils installed
-    brew update
-    brew install mtools xdelta
-
+    # CircleCI: automake is already installed
+    BREW_PACKAGES="pkg-config coreutils mtools xdelta libtool"
     if [[ "$MODE" = "dynamic" ]]; then
-        brew install libarchive confuse xdelta
+        BREW_PACKAGES="$BREW_PACKAGES libarchive confuse"
     fi
+
+    brew install $BREW_PACKAGES
 fi
 

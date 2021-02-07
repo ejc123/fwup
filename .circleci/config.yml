@@ -17,8 +17,17 @@ defaults: &defaults
   docker:
     - image: ubuntu:16.04
 
+defaults_osx: &defaults_osx
+  macos:
+    xcode: "12.4.0"
+  environment:
+    HOMEBREW_NO_AUTO_UPDATE: 1
+
 build: &build
   steps:
+    - run:
+        name: (Hack??) Update apt-get/install Git
+        command: apt-get update && apt-get install git --yes
     - checkout
     - restore_cache:
         key: dl-{{ .Branch }}
@@ -38,6 +47,22 @@ build: &build
         key: dl-{{ .Branch }}
         paths:
           - dl
+
+build_osx: &build_osx
+  steps:
+    - checkout
+    - run:
+        name: Install Deps
+        command: scripts/ci_install_deps.sh
+    - run:
+        name: Build
+        command: scripts/ci_build.sh
+    - store_artifacts:
+        path: tests
+        destination: tests
+    - store_artifacts:
+        path: artifacts
+        destination: artifacts
 
 jobs:
   linux_gcc_static:
@@ -70,6 +95,18 @@ jobs:
       CIRCLE_OS_NAME: linux
       MODE: singlethread
     <<: *build
+  osx_clang_dynamic:
+    <<: *defaults_osx
+    environment:
+      CIRCLE_OS_NAME: osx
+      MODE: dynamic
+    <<: *build
+  osx_clang_static:
+    <<: *defaults_osx
+    environment:
+      CIRCLE_OS_NAME: osx
+      MODE: static
+    <<: *build
 
 workflows:
   version: 2
@@ -85,3 +122,8 @@ workflows:
           <<: *build_workflow
       - linux_gcc_singlethread:
           <<: *build_workflow
+      - osx_clang_dynamic:
+          <<: *build_workflow
+      - osx_clang_static:
+          <<: *build_workflow
+

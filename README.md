@@ -2,8 +2,8 @@
 
 # Overview
 
-[![Build Status](https://travis-ci.org/fhunleth/fwup.svg?branch=master)](https://travis-ci.org/fhunleth/fwup)
-[![Coverage Status](https://coveralls.io/repos/github/fhunleth/fwup/badge.svg)](https://coveralls.io/github/fhunleth/fwup)
+[![CircleCI](https://circleci.com/gh/fwup-home/fwup.svg?style=svg)](https://circleci.com/gh/fwup-home/fwup)
+[![Coverage Status](https://coveralls.io/repos/github/fwup-home/fwup/badge.svg)](https://coveralls.io/github/fhunleth/fwup)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/4094/badge.svg)](https://scan.coverity.com/projects/4094)
 
 `fwup` is a configurable image-based software update utility for embedded
@@ -70,23 +70,23 @@ brew install fwup
 
 On Linux, download and install the appropriate package for your platform:
 
-* [Debian/Ubuntu AMD64 .deb](https://github.com/fhunleth/fwup/releases/download/v1.8.3/fwup_1.8.3_amd64.deb)
-* [Raspbian armhf .deb](https://github.com/fhunleth/fwup/releases/download/v1.8.3/fwup_1.8.3_armhf.deb)
+* [Debian/Ubuntu AMD64 .deb](https://github.com/fwup-home/fwup/releases/download/v1.8.3/fwup_1.8.3_amd64.deb)
+* [Raspbian armhf .deb](https://github.com/fwup-home/fwup/releases/download/v1.8.3/fwup_1.8.3_armhf.deb)
 * Alpine Linux - Install official [apk](https://pkgs.alpinelinux.org/packages?name=fwup&branch=edge)
-* [RedHat/CentOS x86\_64 .rpm](https://github.com/fhunleth/fwup/releases/download/v1.8.3/fwup-1.8.3-1.x86_64.rpm)
+* [RedHat/CentOS x86\_64 .rpm](https://github.com/fwup-home/fwup/releases/download/v1.8.3/fwup-1.8.3-1.x86_64.rpm)
 * Arch Linux - See [fwup package](https://aur.archlinux.org/packages/fwup-git/) on AUR
 * Buildroot - Support is included upstream since the 2016.05 release
-* Yocto - See [meta-fwup](https://github.com/fhunleth/meta-fwup)
+* Yocto - See [meta-fwup](https://github.com/fwup-home/meta-fwup)
 
 On Windows, `fwup` can be installed from [chocolatey](http://chocolatey.org)
 
     choco install fwup
 
-Alternatively, download the [fwup executable](https://github.com/fhunleth/fwup/releases/download/v1.8.3/fwup.exe)
+Alternatively, download the [fwup executable](https://github.com/fwup-home/fwup/releases/download/v1.8.3/fwup.exe)
 and place it in your path.
 
 If you're using another platform or prefer to build it yourself, download the
-latest [source code release](https://github.com/fhunleth/fwup/releases/download/v1.8.3/fwup-1.8.3.tar.gz)
+latest [source code release](https://github.com/fwup-home/fwup/releases/download/v1.8.3/fwup-1.8.3.tar.gz)
 or clone this repository. Then read one of the following files:
 
 * [Linux build instructions](docs/build_linux.md)
